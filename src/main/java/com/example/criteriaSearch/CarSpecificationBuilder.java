@@ -1,6 +1,6 @@
-package com.example.spring_learn.criteriaSearch;
+package com.example.criteriaSearch;
 
-import com.example.spring_learn.model.entity.Car;
+import com.example.model.entity.Car;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;

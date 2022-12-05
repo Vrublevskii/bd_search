@@ -1,6 +1,6 @@
-package com.example.spring_learn.model.repository;
+package com.example.model.repository;
 
-import com.example.spring_learn.model.entity.Car;
+import com.example.model.entity.Car;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

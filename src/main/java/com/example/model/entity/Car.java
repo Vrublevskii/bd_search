@@ -1,4 +1,4 @@
-package com.example.spring_learn.model.entity;
+package com.example.model.entity;
 
 import lombok.Data;
 

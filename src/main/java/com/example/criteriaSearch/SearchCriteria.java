@@ -1,4 +1,4 @@
-package com.example.spring_learn.criteriaSearch;
+package com.example.criteriaSearch;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

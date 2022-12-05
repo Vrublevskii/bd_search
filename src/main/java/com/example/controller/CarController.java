@@ -1,8 +1,8 @@
-package com.example.spring_learn.controller;
+package com.example.controller;
 
-import com.example.spring_learn.criteriaSearch.CarSpecificationBuilder;
-import com.example.spring_learn.model.entity.Car;
-import com.example.spring_learn.model.repository.CarRepository;
+import com.example.criteriaSearch.CarSpecificationBuilder;
+import com.example.model.entity.Car;
+import com.example.model.repository.CarRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
