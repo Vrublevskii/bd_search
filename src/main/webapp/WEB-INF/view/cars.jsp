@@ -9,30 +9,49 @@
 <body>
 <h2>Поиск</h2>
 <form method="post">
-    ID <input type="number" name="id">
-    use<input type="checkbox" name=id_checkbox><br>
+    ID_CAR <input type="number" name="id_car">
+    use<input type="checkbox" name=id_car_checkbox><br>
+
     NAME <input type="text" name="name">
     use<input type="checkbox" name=name_checkbox><br>
+
     COLOR <input type="text" name="color">
     use<input type="checkbox" name=color_checkbox><br>
+
     YEAR <input type="number" name="year">
     use<input type="checkbox" name=year_checkbox><br>
+
+    ID_DRIVER <input type="number" name="id_driver">
+    use<input type="checkbox" name=id_driver_checkbox><br>
+
+    DRIVER NAME <input type="text" name="name_driver">
+    use<input type="checkbox" name=name_driver_checkbox><br>
+
+    DRIVER LAST NAME <input type="text" name="last_name_driver">
+    use<input type="checkbox" name=last_name_driver_checkbox><br>
+
     <input type="submit" value="Submit">
 </form>
 
 <table border="1">
     <tr>
-        <td>ID</td>
+        <td>ID_CAR</td>
         <td>NAME</td>
         <td>COLOR</td>
         <td>YEAR</td>
+        <td>DRIVER ID</td>
+        <td>DRIVER NAME</td>
+        <td>DRIVER LAST NAME</td>
     </tr>
     <c:forEach items="${searchedCars}" var="searchedCars">
         <tr>
-            <td>${searchedCars.id}</td>
+            <td>${searchedCars.id_car}</td>
             <td>${searchedCars.name}</td>
             <td>${searchedCars.color}</td>
             <td>${searchedCars.year}</td>
+            <td>${searchedCars.driver.id_driver}</td>
+            <td>${searchedCars.driver.name_driver}</td>
+            <td>${searchedCars.driver.last_name_driver}</td>
         </tr>
     </c:forEach>
 </table>
