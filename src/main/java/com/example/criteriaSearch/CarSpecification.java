@@ -1,7 +1,6 @@
 package com.example.criteriaSearch;
 
 import com.example.model.entity.Car;
-import com.example.model.entity.Driver;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
