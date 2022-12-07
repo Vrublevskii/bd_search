@@ -14,22 +14,43 @@ public class CarSpecification implements Specification<Car> {
     @Override
     public Predicate toPredicate(Root<Car> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
 
-        if (searchCriteria.getValue().equals("")) {
-            if (searchCriteria.getKey().equals("name_driver")
-                    || searchCriteria.getKey().equals("last_name_driver")
-                    || searchCriteria.getKey().equals("id_driver")
-            ) {
-                return criteriaBuilder.isNull(root.join("driver").get(searchCriteria.getKey()));
-            }
-            return criteriaBuilder.isNull(root.get(searchCriteria.getKey()));
-        } else if (searchCriteria.getKey().equals("name_driver") || searchCriteria.getKey().equals("last_name_driver")) {
-            return criteriaBuilder.like(root.join("driver").get(searchCriteria.getKey()), (String) searchCriteria.getValue());
-        } else if (searchCriteria.getKey().equals("id_driver")) {
-            return criteriaBuilder.equal(root.join("driver").get(searchCriteria.getKey()), searchCriteria.getValue());
-        } else if (root.get(searchCriteria.getKey()).getJavaType() == String.class) {
-            return criteriaBuilder.like(root.get(searchCriteria.getKey()), (String) searchCriteria.getValue());
+        if (isSearchCriteriaEqualToAny("id_driver", "name_driver", "last_name_driver")) {
+            return getPredicate(root, criteriaBuilder, "driver");
         } else {
-            return criteriaBuilder.equal(root.get(searchCriteria.getKey()), searchCriteria.getValue());
+            if (searchCriteria.getValue().equals("")) {
+                return criteriaBuilder.isNull(root.get(searchCriteria.getKey()));
+            } else if (searchCriteria.getValue().getClass() == String.class) {
+                return criteriaBuilder.like(root.get(searchCriteria.getKey()), (String) searchCriteria.getValue());
+            } else {
+                return criteriaBuilder.equal(root.get(searchCriteria.getKey()), searchCriteria.getValue());
+            }
+        }
+
+    }
+
+
+    private boolean isSearchCriteriaEqualToAny(String... keys) {
+        for (String key : keys) {
+            if (searchCriteria.getKey().equals(key)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    private Predicate getPredicate(Root<Car> root, CriteriaBuilder criteriaBuilder, String joinTableName) {
+        if (searchCriteria.getValue().equals("")) {
+            return criteriaBuilder.isNull(root.join(joinTableName).get(searchCriteria.getKey()));
+        } else if (root.join(joinTableName).get(searchCriteria.getKey()).getJavaType() == String.class) {
+            return criteriaBuilder.
+                    like(root.join(joinTableName).
+                            get(searchCriteria.getKey()), (String) searchCriteria.getValue()
+                    );
+        } else {
+            return criteriaBuilder.equal(root.join(joinTableName).
+                    get(searchCriteria.getKey()), searchCriteria.getValue()
+            );
         }
     }
 
