@@ -1,11 +1,14 @@
 package com.example.criteriaSearch;
 
 import com.example.model.entity.Car;
+import com.example.model.entity.Driver;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
+import java.lang.reflect.Field;
 
+@SuppressWarnings("SameParameterValue")
 @AllArgsConstructor
 public class CarSpecification implements Specification<Car> {
 
@@ -14,7 +17,7 @@ public class CarSpecification implements Specification<Car> {
     @Override
     public Predicate toPredicate(Root<Car> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
 
-        if (isSearchCriteriaEqualToAny("id_driver", "name_driver", "last_name_driver")) {
+        if (isSearchCriteriaEqualToClassFields(Driver.class)) {
             return getPredicate(root, criteriaBuilder, "driver");
         } else {
             if (searchCriteria.getValue().equals("")) {
@@ -25,20 +28,21 @@ public class CarSpecification implements Specification<Car> {
                 return criteriaBuilder.equal(root.get(searchCriteria.getKey()), searchCriteria.getValue());
             }
         }
-
     }
 
-
-    private boolean isSearchCriteriaEqualToAny(String... keys) {
-        for (String key : keys) {
-            if (searchCriteria.getKey().equals(key)) {
-                return true;
+    private boolean isSearchCriteriaEqualToClassFields(Class<?> aClass) {
+        for (Field declaredField : aClass.getDeclaredFields()) {
+            System.out.println(declaredField);
+            if (declaredField.toString().contains("java.lang")) {
+                if (searchCriteria.getKey().equals(declaredField.toString()
+                        .replaceAll("private java\\.lang\\..+" + aClass.getSimpleName() + "\\.", ""))) {
+                    return true;
+                }
             }
         }
         return false;
     }
 
-    @SuppressWarnings("SameParameterValue")
     private Predicate getPredicate(Root<Car> root, CriteriaBuilder criteriaBuilder, String joinTableName) {
         if (searchCriteria.getValue().equals("")) {
             return criteriaBuilder.isNull(root.join(joinTableName).get(searchCriteria.getKey()));
