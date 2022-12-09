@@ -2,6 +2,7 @@ package com.example.criteriaSearch;
 
 import com.example.model.entity.Car;
 import com.example.model.entity.Driver;
+import com.example.model.entity.Mechanic;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -19,6 +20,8 @@ public class CarSpecification implements Specification<Car> {
 
         if (isSearchCriteriaEqualToClassFields(Driver.class)) {
             return getPredicate(root, criteriaBuilder, "driver");
+        } else if (isSearchCriteriaEqualToClassFields(Mechanic.class)) {
+            return getPredicate(root, criteriaBuilder, "mechanic");
         } else {
             if (searchCriteria.getValue().equals("")) {
                 return criteriaBuilder.isNull(root.get(searchCriteria.getKey()));
@@ -32,7 +35,6 @@ public class CarSpecification implements Specification<Car> {
 
     private boolean isSearchCriteriaEqualToClassFields(Class<?> aClass) {
         for (Field declaredField : aClass.getDeclaredFields()) {
-            System.out.println(declaredField);
             if (declaredField.toString().contains("java.lang")) {
                 if (searchCriteria.getKey().equals(declaredField.toString()
                         .replaceAll("private java\\.lang\\..+" + aClass.getSimpleName() + "\\.", ""))) {

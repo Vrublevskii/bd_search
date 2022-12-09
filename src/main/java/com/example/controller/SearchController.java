@@ -30,7 +30,6 @@ public class SearchController {
 
     @PostMapping(value = "/cars")
     public String newPagePost(@RequestParam Map<String, String> allParams, Model model) {
-
         CarSpecificationBuilder builder = new CarSpecificationBuilder();
         Set<Map.Entry<String, String>> filteredParams = paramFilter(allParams);
         for (Map.Entry<String, String> entry : filteredParams) {

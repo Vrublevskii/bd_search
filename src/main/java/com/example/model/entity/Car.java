@@ -1,10 +1,13 @@
 package com.example.model.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 public class Car{
 
@@ -24,5 +27,14 @@ public class Car{
     @ManyToOne
     @JoinColumn(name = "id_driver_fk")
     private Driver driver;
+
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "car_mechanic",
+            joinColumns = {@JoinColumn(name = "id_car_s")},
+            inverseJoinColumns = {@JoinColumn(name = "id_mechanic_s")}
+    )
+    private List<Mechanic> mechanics;
 
 }

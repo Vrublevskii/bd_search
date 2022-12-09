@@ -1,10 +1,13 @@
 package com.example.model.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 public class Mechanic {
 
@@ -21,6 +24,7 @@ public class Mechanic {
     @Column
     private Integer category_mechanic;
 
-
+    @ManyToMany(mappedBy = "mechanics")
+    private List<Car> cars;
 
 }

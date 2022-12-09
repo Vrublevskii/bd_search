@@ -1,3 +1,8 @@
+<%@ page import="com.example.model.entity.Car" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.example.model.entity.Mechanic" %>
+<%@ page import="org.springframework.ui.Model" %>
 <%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -42,17 +47,27 @@
         <td>DRIVER ID</td>
         <td>DRIVER NAME</td>
         <td>DRIVER LAST NAME</td>
+        <td>MECHANIC ID</td>
+        <td>MECHANIC NAME</td>
+        <td>MECHANIC LAST NAME</td>
+        <td>MECHANIC CATEGORY</td>
     </tr>
     <c:forEach items="${searchedCars}" var="searchedCars">
-        <tr>
-            <td>${searchedCars.id_car}</td>
-            <td>${searchedCars.name}</td>
-            <td>${searchedCars.color}</td>
-            <td>${searchedCars.year}</td>
-            <td>${searchedCars.driver.id_driver}</td>
-            <td>${searchedCars.driver.name_driver}</td>
-            <td>${searchedCars.driver.last_name_driver}</td>
-        </tr>
+        <c:forEach items="${searchedCars.mechanics}" var="mechanics">
+            <tr>
+                <td>${searchedCars.id_car}</td>
+                <td>${searchedCars.name}</td>
+                <td>${searchedCars.color}</td>
+                <td>${searchedCars.year}</td>
+                <td>${searchedCars.driver.id_driver}</td>
+                <td>${searchedCars.driver.name_driver}</td>
+                <td>${searchedCars.driver.last_name_driver}</td>
+                <td>${mechanics.id_mechanic}</td>
+                <td>${mechanics.name_mechanic}</td>
+                <td>${mechanics.last_name_mechanic}</td>
+                <td>${mechanics.category_mechanic}</td>
+            </tr>
+        </c:forEach>
     </c:forEach>
 </table>
 </body>
