@@ -25,7 +25,7 @@ public class CarSpecification implements Specification<Car> {
         } else {
             if (searchCriteria.getValue().equals("")) {
                 return criteriaBuilder.isNull(root.get(searchCriteria.getKey()));
-            } else if (searchCriteria.getValue().getClass() == String.class) {
+            } else if (root.get(searchCriteria.getKey()).getJavaType() == String.class) {
                 return criteriaBuilder.like(root.get(searchCriteria.getKey()), (String) searchCriteria.getValue());
             } else {
                 return criteriaBuilder.equal(root.get(searchCriteria.getKey()), searchCriteria.getValue());
